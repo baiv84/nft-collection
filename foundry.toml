@@ -1,0 +1,33 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.30"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "forge-std/=lib/forge-std/src/",
+    "murky/=lib/murky/src/",
+]
+# Scoped to the allowlist tooling only -- scripts should never get blanket disk access.
+fs_permissions = [
+    {access = "read", path = "./allowlist.json"},
+    {access = "read", path = "./allowlist.example.json"},
+    {access = "write", path = "./allowlist-proofs.json"},
+]
+
+[profile.default.fuzz]
+runs = 1000
+
+[profile.default.invariant]
+runs = 256
+depth = 128
+fail_on_revert = false
+
+[fmt]
+line_length = 110
+tab_width = 4
+bracket_spacing = false
+int_types = "long"
